@@ -4,18 +4,18 @@ zk:
    - 2181:2181
 
 master:
-  image: mesosphere/mesos-master:0.23.0-1.0.ubuntu1404
+  image: mesosphere/mesos-master:0.26.0-0.2.145.ubuntu1404
   net: host
   environment:
     MESOS_ZK: zk://192.168.99.100:2181/mesos
     MESOS_HOSTNAME: 192.168.99.100
     MESOS_IP: 192.168.99.100
     MESOS_QUORUM: 1
-    MESOS_CLUSTER: docker-compose
+    MESOS_CLUSTER: for_marathon_dev
     MESOS_WORK_DIR: /var/lib/mesos
 
-slave1:
-  image: mesosphere/mesos-slave:0.23.0-1.0.ubuntu1404
+slave:
+  image: mesosphere/mesos-slave:0.27.0-0.2.190.ubuntu1404
   net: host
   pid: host
   environment:
@@ -30,7 +30,7 @@ slave1:
     - /var/run/docker.sock:/var/run/docker.sock
 
 slave2:
-  image: mesosphere/mesos-slave:0.23.0-1.0.ubuntu1404
+  image: mesosphere/mesos-slave:0.27.0-0.2.190.ubuntu1404
   net: host
   pid: host
   environment:
@@ -45,7 +45,7 @@ slave2:
     - /var/run/docker.sock:/var/run/docker.sock
 
 slave3:
-  image: mesosphere/mesos-slave:0.23.0-1.0.ubuntu1404
+  image: mesosphere/mesos-slave:0.27.0-0.2.190.ubuntu1404
   net: host
   pid: host
   environment:
@@ -60,7 +60,7 @@ slave3:
     - /var/run/docker.sock:/var/run/docker.sock
 
 marathon:
-  image: mesosphere/marathon:v0.10.1
+  image: mesosphere/marathon:v0.15.2
   net: host
   environment:
     MARATHON_MASTER: zk://192.168.99.100:2181/mesos
@@ -68,7 +68,7 @@ marathon:
     MARATHON_HOSTNAME: 192.168.99.100
 
 chronos:
-  image: mesosphere/chronos:chronos-2.4.0-0.1.20150828104228.ubuntu1404-mesos-0.23.0-1.0.ubuntu1404
+  image: mesosphere/chronos:chronos-2.4.0-0.1.20150828104228.ubuntu1404-mesos-0.27.0-0.2.190.ubuntu1404
   ports:
     - "8081:8080"
   links:
